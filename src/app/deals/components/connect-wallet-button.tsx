@@ -1,6 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { ethers } from "ethers"
+'use client'
 
-export function ConnectWalletButton() {    
+import { Button } from "@/components/ui/button"
+
+
+export function ConnectWalletButton() {   
   return <Button>Connect Wallet</Button>
 }
