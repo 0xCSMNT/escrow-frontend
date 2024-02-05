@@ -7,23 +7,35 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 export function ConnectWalletButton() {
   const account = useAccount()
   const { connectors, connect, status, error } = useConnect()
-  const { disconnect } = useDisconnect()
+  const { disconnect } = useDisconnect()  
 
   return (
+    <>
     <div>
-        <h2>Connect</h2>
+          status: {account.status}
+          <br />
+          addresses: {JSON.stringify(account.addresses)}
+          <br />
+          chainId: {account.chainId}
+        </div>
+    <div>
         {connectors.map((connector) => (
-          <button
+          <Button
             key={connector.uid}
             onClick={() => connect({ connector })}
             type="button"
           >
-            {connector.name}
-          </button>
+            connect with {connector.name}
+          </Button>
         ))}
-        <div>{status}</div>
-        <div>{error?.message}</div>
+        <div>status: {status}</div>
+        <div>error: {error?.message}</div>
       </div>
+      <Button type="button" onClick={() => disconnect()}>
+            Disconnect
+          </Button>
+
+      </>
     
   );
 }

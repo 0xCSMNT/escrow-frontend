@@ -5,8 +5,7 @@ import { injected } from 'wagmi/connectors'
 export const config = createConfig({
   chains: [mainnet, sepolia],
   connectors: [
-    injected(),
-    
+    injected()    
   ],
   ssr: true,
   transports: {
