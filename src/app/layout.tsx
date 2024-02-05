@@ -1,26 +1,27 @@
+import './globals.css'
+
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { type ReactNode } from 'react'
+
+import { Providers } from '@/app/providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
-import './globals.css'
+
 
 export const metadata: Metadata = {
   title: 'ESCROW ERC20',
   description: 'add description here',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout(props: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <Providers>{props.children}</Providers>
       </body>
     </html>
-  );
+  )
 }
 
