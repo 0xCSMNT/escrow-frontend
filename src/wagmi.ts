@@ -1,20 +1,20 @@
 import { http, createConfig } from 'wagmi'
-import { mainnet, sepolia, localhost } from 'wagmi/chains'
+import { mainnet, sepolia, foundry } from 'wagmi/chains'
 import { injected } from 'wagmi/connectors'
 
 export const config = createConfig({
   chains: [
     mainnet, 
-    sepolia, 
-    localhost],
+    sepolia,     
+    foundry],
   connectors: [
     injected()    
   ],
   ssr: true,
   transports: {
     [mainnet.id]: http(),
-    [sepolia.id]: http(),
-    [localhost.id]: http('http://127.0.0.1:8545')
+    [sepolia.id]: http(),    
+    [foundry.id]: http()
   },
 })
 
