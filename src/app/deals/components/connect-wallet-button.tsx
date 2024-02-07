@@ -1,24 +1,28 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
-
+import { useAccount, useConnect, useDisconnect, useBalance } from "wagmi";
 
 export function ConnectWalletButton() {
-  const account = useAccount()
-  const { connectors, connect, status, error } = useConnect()
-  const { disconnect } = useDisconnect()  
+  const account = useAccount();
+  const { connectors, connect, status, error } = useConnect();
+  const { disconnect } = useDisconnect();
+  const { address } = useAccount();
+
+  const { data: balanceData } = useBalance({
+    address: address,
+  });
 
   return (
     <>
-    <div>
-          status: {account.status}
-          <br />
-          addresses: {JSON.stringify(account.addresses)}
-          <br />
-          chainId: {account.chainId}
-        </div>
-    <div>
+      <div>
+        status: {account.status}
+        <br />
+        addresses: {JSON.stringify(account.addresses)}
+        <br />
+        chainId: {account.chainId}
+      </div>
+      <div>
         {connectors.map((connector) => (
           <Button
             key={connector.uid}
@@ -32,10 +36,10 @@ export function ConnectWalletButton() {
         <div>error: {error?.message}</div>
       </div>
       <Button type="button" onClick={() => disconnect()}>
-            Disconnect
-          </Button>
-
-      </>
-    
+        Disconnect
+      </Button> 
+      <br /> 
+      Balance: {balanceData?.formatted} {balanceData?.symbol}    
+    </>
   );
 }
