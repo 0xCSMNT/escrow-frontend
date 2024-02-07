@@ -7,10 +7,10 @@ export function ConnectWalletButton() {
   const account = useAccount();
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
-  const { address } = useAccount();
+  const walletAddress = account.address;
 
   const { data: balanceData } = useBalance({
-    address: address,
+    address: walletAddress,
   });
 
   return (
@@ -19,6 +19,8 @@ export function ConnectWalletButton() {
         status: {account.status}
         <br />
         addresses: {JSON.stringify(account.addresses)}
+        <br />
+        current address: {account.address}
         <br />
         chainId: {account.chainId}
       </div>
@@ -37,9 +39,9 @@ export function ConnectWalletButton() {
       </div>
       <Button type="button" onClick={() => disconnect()}>
         Disconnect
-      </Button> 
-      <br /> 
-      Balance: {balanceData?.formatted} {balanceData?.symbol}    
+      </Button>
+      <br />
+      Balance: {balanceData?.formatted} {balanceData?.symbol}
     </>
   );
 }
