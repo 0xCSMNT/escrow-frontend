@@ -7,11 +7,7 @@ export function ConnectWalletButton() {
   const account = useAccount();
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
-  const walletAddress = account.address;
-
-  const { data: balanceData } = useBalance({
-    address: walletAddress,
-  });
+  
 
   return (
     <>
@@ -40,8 +36,7 @@ export function ConnectWalletButton() {
       <Button type="button" onClick={() => disconnect()}>
         Disconnect
       </Button>
-      <br />
-      Balance: {balanceData?.formatted} {balanceData?.symbol}
+      <br />      
     </>
   );
 }
