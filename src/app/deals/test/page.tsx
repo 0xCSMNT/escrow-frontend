@@ -2,6 +2,8 @@
 
 import { ConnectWalletButton } from "../components/connect-wallet-button";
 import { EthBalance } from "../components/eth-balance";
+import { MLinkBalance } from "../components/mlink-balance";
+import { MUniBalance } from "../components/muni-balance";
 
 function TestPage() {
     return (
@@ -11,6 +13,9 @@ function TestPage() {
         <ConnectWalletButton />
         <br />
         <EthBalance />
+        <br />
+        <MLinkBalance />
+        <MUniBalance />
       </div>
     );
   }
