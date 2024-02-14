@@ -6,9 +6,9 @@ import React from "react";
 
 const contractABI = verifierABI;
 const contractAddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9" // ; anvil
-const dealId = 0;
+const dealId = BigInt(0);
 
-"0x7a9AFdcA16849AD040e07a1CFcE9cEB658fE2d4f"; // sepolia
+// "0x7a9AFdcA16849AD040e07a1CFcE9cEB658fE2d4f"; // sepolia
 
 
 
