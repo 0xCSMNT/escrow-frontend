@@ -5,8 +5,10 @@ import { verifierABI } from "../../../abi/verifierABI";
 import React from "react";
 
 const contractABI = verifierABI;
-const contractAddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9";
+const contractAddress = "0x7a9AFdcA16849AD040e07a1CFcE9cEB658fE2d4f"; // sepolia
 const dealId = 0;
+
+// "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"; anvil
 
 type ReadDealData = [
   string, // party
@@ -29,7 +31,7 @@ export function ViewDeal() {
     args: [dealId],
   });
 
-  console.log("Deal Data: ", data);
+  
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -65,6 +67,9 @@ export function ViewDeal() {
     <div>
       <h2>Deal Details</h2>
       <p>Party: {party}</p>
+      <p>Counterparty: {counterparty}</p>
+      <p>Party Token: {partyToken}</p>
+      <p>Party Token Amount: {partyTokenAmount}</p>
       {/* You can display more details here using the other variables */}
     </div>
   );
