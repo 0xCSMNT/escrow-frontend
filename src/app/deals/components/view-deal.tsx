@@ -5,46 +5,36 @@ import { verifierABI } from "../../../abi/verifierABI";
 import React from "react";
 
 const contractABI = verifierABI;
-const contractAddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9" // ; anvil
-const dealId = BigInt(0);
+const contractAddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"; // Anvil
+const dealId = BigInt(0); // Deal ID to query, using BigInt for large number support
 
-// "0x7a9AFdcA16849AD040e07a1CFcE9cEB658fE2d4f"; // sepolia
-
-
-
+// TypeScript type for the data returned by the `readDeal` function on SC
 type ReadDealData = [
-  string, // party
-  string, // counterparty
-  string, // partyToken
-  number, // partyTokenAmount
-  string, // counterpartyToken
-  number, // counterpartyTokenAmount
-  boolean, // partyFunded
-  boolean, // counterpartyFunded
-  boolean, // dealCanceled
-  boolean // dealExecuted
+  string, // Party address
+  string, // Counterparty address
+  string, // Party token address
+  bigint, // Party token amount
+  string, // Counterparty token address
+  bigint, // Counterparty token amount
+  boolean, // Party funded?
+  boolean, // Counterparty funded?
+  boolean, // Deal canceled?
+  boolean // Deal executed?
 ];
 
 export function ViewDeal() {
   const { data, isError, isLoading } = useReadContract({
-    abi: contractABI,
-    address: contractAddress,
-    functionName: "readDeal",
-    args: [dealId],
+    abi: contractABI, // ABI of the contract
+    address: contractAddress, // Address of the contract
+    functionName: "readDeal", // Name of the function to call
+    args: [dealId], // Arguments to the function
   });
 
-  
+  // Handle loading & error states
+  if (isLoading) return <div>Loading...</div>;
+  if (isError || !data) return <div>Error loading the deal data.</div>;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError || !data) {
-    return <div>Error loading the deal data.</div>;
-  }
-
-  // Use a type assertion to tell TypeScript the shape of data.
-  // Since 'data' could be undefined, we ensure we're operating on an array structure.
+  // Destructure the returned data into individual variables
   const [
     party,
     counterparty,
@@ -56,14 +46,11 @@ export function ViewDeal() {
     counterpartyFunded,
     dealCanceled,
     dealExecuted,
-  ] = data ? (data as ReadDealData) : [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined];
+  ] = data ? (data as ReadDealData) : Array(10).fill(undefined); // Provide fallback values
 
-  console.log("Deal Data 2: ", data);
-
-  // Additional checks or fallback UI could be implemented here if the data is not in the expected format or length.
-  if (!party) {
+  // Handle case where required data is not available
+  if (!party)
     return <div>Deal data is not available or in an unexpected format.</div>;
-  }
 
   return (
     <div>
@@ -71,8 +58,13 @@ export function ViewDeal() {
       <p>Party: {party}</p>
       <p>Counterparty: {counterparty}</p>
       <p>Party Token: {partyToken}</p>
-      <p>Party Token Amount: {partyTokenAmount}</p>
-      {/* You can display more details here using the other variables */}
+      <p>Party Token Amount: {partyTokenAmount.toString()}</p>
+      <p>Counterparty Token: {counterpartyToken}</p>
+      <p>Counterparty Token Amount: {counterpartyTokenAmount.toString()}</p>
+      <p>Party Funded: {partyFunded.toString()}</p>
+      <p>Counterparty Funded: {counterpartyFunded.toString()}</p>
+      <p>Deal Canceled: {dealCanceled.toString()}</p>
+      <p>Deal Executed: {dealExecuted.toString()}</p>
     </div>
   );
 }
