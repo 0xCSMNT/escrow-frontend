@@ -5,8 +5,10 @@ import { verifierABI } from "../../../abi/verifierABI";
 import React from "react";
 
 const contractABI = verifierABI;
-const contractAddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"; // Anvil
+const contractAddress = process.env.NEXT_PUBLIC_ANVIL_VERIFIER_ADDRESS; // Anvil
 const dealId = BigInt(0); // Deal ID to query, using BigInt for large number support
+
+console.log(contractAddress);
 
 // TypeScript type for the data returned by the `readDeal` function on SC
 type ReadDealData = [
@@ -21,6 +23,7 @@ type ReadDealData = [
   boolean, // Deal canceled?
   boolean // Deal executed?
 ];
+
 
 export function ViewDeal() {
   const { data, isError, isLoading } = useReadContract({
