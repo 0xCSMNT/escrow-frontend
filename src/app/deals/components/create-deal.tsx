@@ -1,10 +1,31 @@
 "use client";
 
 import React from "react";
+import { useWriteContract } from "wagmi";
+import { verifierABI } from "../../../abi/verifierABI";
+
+const contractABI = verifierABI;
+const contractAddress = process.env.NEXT_PUBLIC_ANVIL_VERIFIER_ADDRESS; // Anvil
 
 export function CreateDeal() {
+    const { data: hash, writeContract } = useWriteContract()
+    async function submit(e: React.FormEvent<HTMLFormElement>) { 
+        e.preventDefault() 
+        const formData = new FormData(e.target as HTMLFormElement);
+        const counterparty = formData.get('counterparty address') as string; 
+        const partyToken = formData.get('party token address') as string;
+        const partyTokenAmount = formData.get('party token amount') as string;
+        const counterpartyToken = formData.get('counterparty token address') as string;
+        const counterpartyTokenAmount = formData.get('counterparty token amount') as string;
+        writeContract({
+            abi: contractABI,
+            address: contractAddress,
+            functionName: "createDeal",
+            args: [counterparty, partyToken, BigInt(partyTokenAmount), counterpartyToken, BigInt(counterpartyTokenAmount)]
+        })
+    }
   return (
-    <form>
+    <form onSubmit={submit}>
       <h2>Create Deal</h2>
       <input
         name="counterparty address"
@@ -37,6 +58,7 @@ export function CreateDeal() {
       />
       <br />
       <button type="submit">Create</button>
+      {hash && <div>Transaction Hash: {hash}</div>} 
     </form>
   );
 }

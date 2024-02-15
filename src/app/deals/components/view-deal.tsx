@@ -6,7 +6,7 @@ import React from "react";
 
 const contractABI = verifierABI;
 const contractAddress = process.env.NEXT_PUBLIC_ANVIL_VERIFIER_ADDRESS; // Anvil
-const dealId = BigInt(0); // Deal ID to query, using BigInt for large number support
+const dealId = BigInt(1); // Deal ID to query, using BigInt for large number support
 
 console.log(contractAddress);
 
@@ -23,7 +23,6 @@ type ReadDealData = [
   boolean, // Deal canceled?
   boolean // Deal executed?
 ];
-
 
 export function ViewDeal() {
   const { data, isError, isLoading } = useReadContract({
@@ -58,6 +57,7 @@ export function ViewDeal() {
   return (
     <div>
       <h2>Deal Details</h2>
+      <p>Deal ID: {dealId.toString()}</p>
       <p>Party: {party}</p>
       <p>Counterparty: {counterparty}</p>
       <p>Party Token: {partyToken}</p>

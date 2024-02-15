@@ -16,7 +16,6 @@ function TestPage() {
         <ConnectWalletButton />
         <br />
         <EthBalance />
-        <br />
         <MLinkBalance />
         <MUniBalance />
         <br />
